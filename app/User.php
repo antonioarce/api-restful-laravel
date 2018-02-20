@@ -9,13 +9,20 @@ class User extends Authenticatable
 {
     use Notifiable;
 
+    const USUARIO_VERIFICADO = '1';
+    const USUARIO_NO_VERIFICADO = '0';
+
+    const USUARIO_ADMINISTRADOR = 'true';
+    const USUARIO_REGULAR = 'false';
+
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'verified', 'verification_token', 'admin'
     ];
 
     /**
@@ -24,6 +31,18 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token', 'verification_token',
     ];
+
+    public function esVerificado(){
+        return $this->verified == User::USUARIO_VERIFICADO;
+    }
+
+    public function esAdministrador(){
+        return $this->verified == User::USUARIO_ADMINISTRADORU;
+    }
+
+    public function generarVerificationToken(){
+        return str_random(40);
+    }
 }
