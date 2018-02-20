@@ -34,6 +34,8 @@ class User extends Authenticatable
         'password', 'remember_token', 'verification_token',
     ];
 
+    protected $table = 'users';
+
     public function esVerificado(){
         return $this->verified == User::USUARIO_VERIFICADO;
     }
@@ -42,7 +44,7 @@ class User extends Authenticatable
         return $this->verified == User::USUARIO_ADMINISTRADORU;
     }
 
-    public function generarVerificationToken(){
+    public static function generarVerificationToken(){
         return str_random(40);
     }
 }
