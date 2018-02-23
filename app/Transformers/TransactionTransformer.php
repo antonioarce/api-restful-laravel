@@ -22,7 +22,13 @@ class TransactionTransformer extends TransformerAbstract
             'fechaCreacion' => (string)$transaction->created_at,
             'fechaActualizacion' => (string)$transaction->created_at,
             'fechaEliminacion' => isset($transaction->deleted_at) ? (string)$transaction->deleted_at : null,
-
+            'links' => [
+                ['rel' => 'self' , 'href' => route('transactions.show', $transaction->id) ],
+                ['rel' => 'buyer' , 'href' => route('buyers.show',$transaction->buyer_id) , ],
+                ['rel' => 'product' , 'href' => route('products.show',$transaction->product_id) , ],
+                ['rel' => 'transactions.categories' , 'href' => route('transactions.categories.index',$transaction->id) ],
+                ['rel' => 'transactions.seller' , 'href' => route('transactions.sellers.index',$transaction->id)],
+            ],
         ];
     }
 
@@ -35,6 +41,21 @@ class TransactionTransformer extends TransformerAbstract
             'fechaCreacion' => 'created_at',
             'fechaActualizacion' => 'updated_at',
             'fechaEliminacion' => 'deleted_at',
+        ];
+
+        return isset($attributes[$index]) ? $attributes[$index] : null;
+    }
+
+
+    public static function transformedAttribute($index){
+        $attributes = [
+              'id' => 'identificador',
+              'quantity' => 'cantidad',
+              'buyer_id' => 'comprador',
+              'product_id' => 'producto',
+              'created_at' => 'fechaCreacion',
+              'updated_at' => 'fechaActualizacion',
+              'deleted_at' => 'fechaEliminacion'
         ];
 
         return isset($attributes[$index]) ? $attributes[$index] : null;
