@@ -20,6 +20,11 @@ class DatabaseSeeder extends Seeder
 
         \Illuminate\Support\Facades\DB::table('category_product')->truncate();
 
+        \App\User::flushEventListeners();
+        \App\Category::flushEventListeners();
+        \App\Product::flushEventListeners();
+        \App\Transaction::flushEventListeners();
+
         $cantidadUsuarios = 1000;
         $cantidadCategorias = 30;
         $cantidadProductos = 1000;
